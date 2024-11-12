@@ -1,7 +1,7 @@
 export function Keyboard({
   onLeft, onRight, onJump
 }: { onLeft: () => void, onRight: () => void, onJump: () => void,  }) {
-  window.addEventListener('keyup', (event) => {
+  window.addEventListener('keydown', (event) => {
     switch (event.key) {
       case "ArrowLeft":
           onLeft()

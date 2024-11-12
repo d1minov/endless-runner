@@ -1,15 +1,24 @@
 import { base3d } from "./3d/base3d"
-import { player3d } from "./entity/player";
+import { player } from "./entity/player";
+import { bonusManager } from "./manager/bonusManager";
+import { obstacleManager } from "./manager/obstacleManager";
+import { score } from "./score";
 
 function Game () {
 
   base3d.renderer.setAnimationLoop( mainLoop );
-  base3d.scene.add(player3d.mesh)
+  player
+  bonusManager
+  obstacleManager
 
-  
+  score.bonus = 0
+  score.lifes = 3
 
   function mainLoop() {
     base3d.tick()
+    bonusManager.tick()
+    obstacleManager.tick()
+    // bonus.tick()
   }
 }
 
