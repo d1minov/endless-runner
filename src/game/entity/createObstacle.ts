@@ -15,12 +15,12 @@ export function createObstacle ({ x }: { x: number }) {
 
   const mesh = new THREE.Mesh( geometry, material );
   mesh.position.x = x
-  mesh.position.z = -10
+  mesh.position.z = -config.ITEMS_DISTANCE
 
   base3d.scene.add(mesh)
 
   function tick() {
-    mesh.position.z += config.VELOCITY
+    mesh.position.z += config.ITEMS_VELOCITY
 
     if (outTest(mesh.position)) {
       base3d.scene.remove(mesh)

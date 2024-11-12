@@ -15,7 +15,10 @@ function createBonusManager () {
   }
 
   function spawnNew() {
-    createBonus({ x: config.LINE_POSITIONS[Math.floor(Math.random() * config.LINE_COUNT)]})
+    createBonus({
+      x: config.LINE_POSITIONS[Math.floor(Math.random() * config.LINE_COUNT)],
+      y: Math.random() < 0.25 ? 1 : 0
+    })
   }
 
   return {

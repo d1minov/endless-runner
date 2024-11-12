@@ -11,16 +11,15 @@ import { score } from '../score';
 const geometry = new THREE.SphereGeometry(0.5);
 const material = new THREE.MeshBasicMaterial( { color: 0x00FF00 } );
 
-export function createBonus ({ x }: { x: number }) {
+export function createBonus ({ x, y }: { x: number, y: number }) {
 
   const mesh = new THREE.Mesh( geometry, material );
-  mesh.position.x = x
-  mesh.position.z = -10
+  mesh.position.set(x, y, -config.ITEMS_DISTANCE)
 
   base3d.scene.add(mesh)
   
   function tick() {
-    mesh.position.z += config.VELOCITY
+    mesh.position.z += config.ITEMS_VELOCITY
 
     if (outTest(mesh.position)) {
       base3d.scene.remove(mesh)

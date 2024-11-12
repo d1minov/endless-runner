@@ -11,13 +11,28 @@ function createObstacleManager () {
   }, DELAY / 2)
 
   function tick() {
-    for (const obstacle of list) {
+    const obstacles = [...list]
+    for (const obstacle of obstacles) {
       obstacle.tick()
     }
-  }
+   }
 
   function spawnNew() {
-    createObstacle({ x: config.LINE_POSITIONS[Math.floor(Math.random() * config.LINE_COUNT)]})
+
+    const min = 1
+    const max = config.LINE_COUNT
+    const count = Math.floor((Math.random() ** 2) * (max - min) + min)
+    const positions: number[] = []
+    while (positions.length < count) {
+      const x = config.LINE_POSITIONS[Math.floor(Math.random() * config.LINE_COUNT)]
+      if (positions.indexOf(x) === -1) {
+        positions.push(x)
+      }
+    }
+
+    for(const x of positions) {
+      createObstacle({ x })
+    }
   }
 
   return {

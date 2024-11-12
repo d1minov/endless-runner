@@ -4,14 +4,14 @@ export function Keyboard({
   window.addEventListener('keydown', (event) => {
     switch (event.key) {
       case "ArrowLeft":
-          onLeft()
-          // Left pressed
-          break;
+        onLeft()
+        // Left pressed
+        break;
       case "ArrowRight":
         onRight()
-          // Right pressed
-          break;
-      case "Space":
+        // Right pressed
+        break;
+      case " ":
         onJump()
         break;
     }

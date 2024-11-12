@@ -11,19 +11,52 @@ function createPlayer () {
   const mesh = new THREE.Mesh( geometry, material );
   mesh.position.x = 0
 
+  let xTarget = 0
+  let yVelocity = 0
+
   base3d.scene.add(mesh)
 
   Keyboard({
     onLeft() {
-      mesh.position.x = Math.max(mesh.position.x - 1, -Math.floor(config.LINE_COUNT / 2))
+      if (yVelocity === 0) {
+        xTarget = Math.max(xTarget - 1, -Math.floor(config.LINE_COUNT / 2))
+      }
     },
     onRight() {
-      mesh.position.x = Math.min(mesh.position.x + 1, Math.floor(config.LINE_COUNT / 2))
+      if (yVelocity === 0) {
+        xTarget = Math.min(xTarget + 1, Math.floor(config.LINE_COUNT / 2))
+      }
     },
     onJump() {
-      // todo
+      if (mesh.position.y <= 0) {
+        yVelocity = config.PLAYER_JUMP_POWER
+      }
     },
   })
+
+  function tick() {
+
+    if (Math.abs(mesh.position.x - xTarget) <= config.PLAYER_VELOCITY_X) {
+      mesh.position.x = xTarget
+    }
+
+    if (yVelocity !== 0) {
+      mesh.position.y += yVelocity
+      yVelocity -= config.PLAYER_JUMP_GRAVITY
+    }
+
+    if (yVelocity < 0 && mesh.position.y < 0) {
+      yVelocity = 0
+      mesh.position.y = 0
+    }
+
+    if (mesh.position.x > xTarget) {
+      mesh.position.x -= config.PLAYER_VELOCITY_X
+    } else if (mesh.position.x < xTarget) {
+      mesh.position.x += config.PLAYER_VELOCITY_X
+    }
+
+  }
 
   function dies() {
     mesh.position.set(config.LINE_COUNT * 1000, -1000, base3d.camera.position.z + 1000)
@@ -32,7 +65,8 @@ function createPlayer () {
 
   return {
     mesh,
-    dies
+    dies,
+    tick
   }
 }
 
