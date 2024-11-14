@@ -9,13 +9,11 @@ import { hitTest } from '../physic/hitTest';
 import { score } from '../score';
 
 const geometry = new THREE.BoxGeometry(1);
-const material = new THREE.MeshBasicMaterial( { color: 0xFF0000 } );
+const material = new THREE.MeshNormalMaterial();
 
-export function createObstacle ({ x }: { x: number }) {
+export function createObstacle () {
 
   const mesh = new THREE.Mesh( geometry, material );
-  mesh.position.x = x
-  mesh.position.z = -config.ITEMS_DISTANCE
 
   base3d.scene.add(mesh)
 
@@ -35,7 +33,8 @@ export function createObstacle ({ x }: { x: number }) {
   }
 
   const obstacle = {
-    tick
+    tick,
+    mesh
   }
   
   obstacleManager.list.push(obstacle)

@@ -11,10 +11,8 @@ import { score } from '../score';
 const geometry = new THREE.SphereGeometry(0.5);
 const material = new THREE.MeshBasicMaterial( { color: 0x00FF00 } );
 
-export function createBonus ({ x, y }: { x: number, y: number }) {
-
+export function createBonus () {
   const mesh = new THREE.Mesh( geometry, material );
-  mesh.position.set(x, y, -config.ITEMS_DISTANCE)
 
   base3d.scene.add(mesh)
   
@@ -34,7 +32,8 @@ export function createBonus ({ x, y }: { x: number, y: number }) {
   }
 
   const bonus = {
-    tick
+    tick,
+    mesh
   }
 
   bonusManager.list.push(bonus)

@@ -1,24 +1,26 @@
 import { config } from "../config"
 import { createObstacle } from "../entity/createObstacle"
 
-const DELAY = 1000
-
 function createObstacleManager () {
   const list: ReturnType<typeof createObstacle>[] = []
 
-  setTimeout(() => {
-    setInterval(spawnNew, DELAY)
-  }, DELAY / 2)
+  let currentDist = 0
+  let nextDistSpawn = 10
 
   function tick() {
     const obstacles = [...list]
     for (const obstacle of obstacles) {
       obstacle.tick()
     }
+
+    currentDist += config.ITEMS_VELOCITY
+    if (currentDist >= nextDistSpawn) {
+      spawnNew(currentDist - nextDistSpawn)
+      nextDistSpawn = Math.floor(currentDist) + config.OBSTACLE_DIST
+    }
    }
 
-  function spawnNew() {
-
+  function spawnNew(gap: number) {
     const min = 1
     const max = config.LINE_COUNT
     const count = Math.floor((Math.random() ** 2) * (max - min) + min)
@@ -31,7 +33,9 @@ function createObstacleManager () {
     }
 
     for(const x of positions) {
-      createObstacle({ x })
+      const z = -(config.INIT_ITEMS_DISTANCE + gap)
+      const { mesh } = createObstacle()
+      mesh.position.set(x, 0, z)
     }
   }
 
