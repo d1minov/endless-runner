@@ -12,50 +12,60 @@ function createPlayer () {
   mesh.position.x = 0
 
   let xTarget = 0
-  let yVelocity = 0
+  let yTarget = 0
+  let jumpDist = 0
 
   base3d.scene.add(mesh)
 
   Keyboard({
     onLeft() {
-      if (yVelocity === 0) {
+      if (mesh.position.y === 0) {
         xTarget = Math.max(xTarget - 1, -Math.floor(config.LINE_COUNT / 2))
       }
     },
     onRight() {
-      if (yVelocity === 0) {
+      if (mesh.position.y === 0) {
         xTarget = Math.min(xTarget + 1, Math.floor(config.LINE_COUNT / 2))
       }
     },
     onJump() {
       if (mesh.position.y <= 0) {
-        yVelocity = config.PLAYER_JUMP_POWER
+        jumpDist = 0
+        yTarget = 1
       }
     },
+    onJumpEnd() {
+      yTarget = 0
+    }
   })
 
   function tick() {
+    if (mesh.position.y > 0) {
+      jumpDist += config.ITEMS_VELOCITY
+      if (jumpDist >= config.PLAYER_JUMP_DIST) {
+        yTarget = 0
+      }
+    }
 
     if (Math.abs(mesh.position.x - xTarget) <= config.PLAYER_VELOCITY_X) {
       mesh.position.x = xTarget
     }
 
-    if (yVelocity !== 0) {
-      mesh.position.y += yVelocity
-      yVelocity -= config.PLAYER_JUMP_GRAVITY
+    if (Math.abs(mesh.position.y - yTarget) <= config.PLAYER_VELOCITY_Y) {
+      mesh.position.y = yTarget
     }
-
-    if (yVelocity < 0 && mesh.position.y < 0) {
-      yVelocity = 0
-      mesh.position.y = 0
-    }
-
+    
     if (mesh.position.x > xTarget) {
       mesh.position.x -= config.PLAYER_VELOCITY_X
     } else if (mesh.position.x < xTarget) {
       mesh.position.x += config.PLAYER_VELOCITY_X
     }
 
+    if (mesh.position.y > yTarget) {
+      mesh.position.y -= config.PLAYER_VELOCITY_Y
+    } else if (mesh.position.y < yTarget) {
+      mesh.position.y += config.PLAYER_VELOCITY_Y
+    }
   }
 
   function dies() {

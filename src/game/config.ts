@@ -2,11 +2,13 @@ function createConfig () {
 
   const initial = {
     ITEMS_VELOCITY: 0.1,
-    ITEMS_DISTANCE: 50,
+    INIT_ITEMS_DISTANCE: 50,
+
+    OBSTACLE_DIST: 20,
 
     PLAYER_VELOCITY_X: 0.25,
-    PLAYER_JUMP_POWER: 0.15,
-    PLAYER_JUMP_GRAVITY: 0.01,
+    PLAYER_VELOCITY_Y: 0.1,
+    PLAYER_JUMP_DIST: 3
   }
 
   const options = {
@@ -25,9 +27,7 @@ function createConfig () {
     const POWER_ACCELERATION = options.ITEMS_VELOCITY / initial.ITEMS_VELOCITY
 
     options.PLAYER_VELOCITY_X = POWER_ACCELERATION * initial.PLAYER_VELOCITY_X
-    options.PLAYER_JUMP_POWER = POWER_ACCELERATION * initial.PLAYER_JUMP_POWER
-    options.PLAYER_JUMP_GRAVITY = initial.PLAYER_JUMP_GRAVITY * POWER_ACCELERATION
-
+    options.PLAYER_VELOCITY_Y = POWER_ACCELERATION * initial.PLAYER_VELOCITY_Y
   }
 
   return options
