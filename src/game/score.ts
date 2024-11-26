@@ -24,9 +24,9 @@ function createScore () {
       if (lifes >= 0) {
         lifeEl.innerHTML = new Array(value).fill('💜').join('')
       } else {
-        // Game over todo
         lifeEl.innerHTML = '☠️'
         player.dies()
+        setTimeout(() => window.location.href = `score.html?score=${bonus}`, 1000)
       }
     },
   }

@@ -21,8 +21,10 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        test1: '/index.html',
-        test2: '/game.html'
+        home: '/index.html',
+        game: '/game.html',
+        level: '/level.html',
+        score: '/score.html'
       }
     }
   }

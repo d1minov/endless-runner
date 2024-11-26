@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Endless Runner</title>
+  </head>
+  <body>
+    <h1>Score</h1>
+    <p>Your score is <span class="score"></span></p>
+    <a href="level.html">Replay</a>
+    <script>
+      document.body.querySelector('.score').innerText = Number(new URLSearchParams(window.location.search).get('score'))
+    </script>
+  </body>
+</html>
