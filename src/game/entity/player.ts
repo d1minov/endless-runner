@@ -1,6 +1,6 @@
 
 import * as THREE from 'three';
-import { Keyboard } from '../controls/keyboard';
+import { Controls } from '../controls/index';
 import { base3d } from '../3d/base3d';
 import { config } from '../config';
 
@@ -17,7 +17,7 @@ function createPlayer () {
 
   base3d.scene.add(mesh)
 
-  Keyboard({
+  Controls({
     onLeft() {
       if (mesh.position.y === 0) {
         xTarget = Math.max(xTarget - 1, -Math.floor(config.LINE_COUNT / 2))
