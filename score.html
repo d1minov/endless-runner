@@ -8,7 +8,8 @@
   <body>
     <h1>Score</h1>
     <p>Your score is <span class="score"></span></p>
-    <a href="level.html">Replay</a>
+    <a href="level.html" class="btn-replay">Replay</a>
+    <script type="module" src="/src/screen/score.ts"></script>
     <script>
       document.body.querySelector('.score').innerText = Number(new URLSearchParams(window.location.search).get('score'))
     </script>

@@ -9,11 +9,10 @@ import { hitTest } from '../physic/hitTest';
 import { score } from '../score';
 import { getYFromZ } from '../3d/position';
 
-const DEBUG = true
+const DEBUG = false
 
 const geometry = new THREE.BoxGeometry(1);
 const material = new THREE.MeshNormalMaterial();
-
 
 export function createObstacle ({ x, y, z }: { x: number, y: number, z: number }) {
 

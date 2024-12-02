@@ -3,7 +3,11 @@ import { defineConfig } from 'vite'
 const jsToBottomNoModule = () => {
   return {
     name: "no-attribute",
-    transformIndexHtml(html) {
+    transformIndexHtml(html, option) {
+      if (option.path !== '/game.html') {
+        return html
+      }
+
       html = html.replace(`type="module" crossorigin`, "")
       const match = html.match(/<script[^>]*>(.*?)<\/script[^>]*>/)
       if (match) {

@@ -1,18 +1,16 @@
 export function Keyboard({
   onLeft, onRight, onJump, onJumpEnd
-}: { onLeft: () => void, onRight: () => void, onJump: () => void, onJumpEnd: () => void  }) {
+}: { onLeft?: () => void, onRight?: () => void, onJump?: () => void, onJumpEnd?: () => void  }) {
   window.addEventListener('keydown', (event) => {
     switch (event.key) {
       case "ArrowLeft":
-        onLeft()
-        // Left pressed
+        onLeft && onLeft()
         break;
       case "ArrowRight":
-        onRight()
-        // Right pressed
+        onRight && onRight()
         break;
       case " ":
-        onJump()
+        onJump && onJump()
         break;
     }
   })
@@ -20,7 +18,7 @@ export function Keyboard({
   window.addEventListener('keyup', (event) => {
     switch (event.key) {
       case " ":
-        onJumpEnd()
+        onJumpEnd && onJumpEnd()
         break;
     }
   })

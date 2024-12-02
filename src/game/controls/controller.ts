@@ -1,7 +1,7 @@
 
 export function Controller({
   onLeft, onRight, onJump, onJumpEnd
-}: { onLeft: () => void, onRight: () => void, onJump: () => void, onJumpEnd: () => void  }) {
+}: { onLeft?: () => void, onRight?: () => void, onJump?: () => void, onJumpEnd?: () => void  }) {
   const values = {
     action: false,
     left: false,
@@ -26,23 +26,23 @@ export function Controller({
 
     if (values.action !== tempValues.action) {
       if (tempValues.action) {
-        onJump()
+        onJump && onJump()
       } else {
-        onJumpEnd()
+        onJumpEnd && onJumpEnd()
       }
       values.action = tempValues.action
     }
 
     if (values.left !== tempValues.left) {
       if (tempValues.left) {
-        onLeft()
+        onLeft && onLeft()
       }
       values.left = tempValues.left
     }
 
     if (values.right !== tempValues.right) {
       if (tempValues.right) {
-        onRight()
+        onRight && onRight()
       }
       values.right = tempValues.right
     }

@@ -2,6 +2,8 @@ import { base3d } from "./3d/base3d"
 import { config } from "./config";
 import { player } from "./entity/player";
 import { bonusManager } from "./manager/bonusManager";
+import { groundManager } from "./manager/groundManager";
+import { mountainManager } from "./manager/mountainManager";
 import { obstacleManager } from "./manager/obstacleManager";
 import { score } from "./score";
 
@@ -17,6 +19,8 @@ function Game () {
     base3d.tick()
     bonusManager.tick()
     obstacleManager.tick()
+    groundManager.tick()
+    mountainManager.tick()
     config.tick()
     // bonus.tick()
   }
