@@ -3,13 +3,18 @@ import * as THREE from 'three';
 import { Controls } from '../controls/index';
 import { base3d } from '../3d/base3d';
 import { config } from '../config';
+import { getYFromZ } from '../3d/position';
 
 function createPlayer () {
 
   const geometry = new THREE.SphereGeometry(0.5);
   const material = new THREE.MeshBasicMaterial( { color: 0x0000FF } );
   const mesh = new THREE.Mesh( geometry, material );
+
+  let y = 0
+
   mesh.position.x = 0
+  mesh.position.y = getYFromZ(0, y)
 
   let xTarget = 0
   let yTarget = 0
@@ -19,17 +24,17 @@ function createPlayer () {
 
   Controls({
     onLeft() {
-      if (mesh.position.y === 0) {
+      if (y === 0) {
         xTarget = Math.max(xTarget - 1, -Math.floor(config.LINE_COUNT / 2))
       }
     },
     onRight() {
-      if (mesh.position.y === 0) {
+      if (y === 0) {
         xTarget = Math.min(xTarget + 1, Math.floor(config.LINE_COUNT / 2))
       }
     },
     onJump() {
-      if (mesh.position.y <= 0) {
+      if (y <= 0) {
         jumpDist = 0
         yTarget = 1
       }
@@ -40,7 +45,7 @@ function createPlayer () {
   })
 
   function tick() {
-    if (mesh.position.y > 0) {
+    if (y > 0) {
       jumpDist += config.ITEMS_VELOCITY
       if (jumpDist >= config.PLAYER_JUMP_DIST) {
         yTarget = 0
@@ -51,8 +56,8 @@ function createPlayer () {
       mesh.position.x = xTarget
     }
 
-    if (Math.abs(mesh.position.y - yTarget) <= config.PLAYER_VELOCITY_Y) {
-      mesh.position.y = yTarget
+    if (Math.abs(y - yTarget) <= config.PLAYER_VELOCITY_Y) {
+      y = yTarget
     }
     
     if (mesh.position.x > xTarget) {
@@ -61,11 +66,13 @@ function createPlayer () {
       mesh.position.x += config.PLAYER_VELOCITY_X
     }
 
-    if (mesh.position.y > yTarget) {
-      mesh.position.y -= config.PLAYER_VELOCITY_Y
-    } else if (mesh.position.y < yTarget) {
-      mesh.position.y += config.PLAYER_VELOCITY_Y
+    if (y > yTarget) {
+      y -= config.PLAYER_VELOCITY_Y
+    } else if (y < yTarget) {
+      y += config.PLAYER_VELOCITY_Y
     }
+
+    mesh.position.y = getYFromZ(0, y)
   }
 
   function dies() {

@@ -7,18 +7,24 @@ import { obstacleManager } from '../manager/obstacleManager';
 import { player } from './player';
 import { hitTest } from '../physic/hitTest';
 import { score } from '../score';
+import { getYFromZ } from '../3d/position';
+
+const DEBUG = true
 
 const geometry = new THREE.BoxGeometry(1);
 const material = new THREE.MeshNormalMaterial();
 
-export function createObstacle () {
+
+export function createObstacle ({ x, y, z }: { x: number, y: number, z: number }) {
 
   const mesh = new THREE.Mesh( geometry, material );
-
+  mesh.position.set(x, getYFromZ(z, y), z)
+  
   base3d.scene.add(mesh)
 
   function tick() {
     mesh.position.z += config.ITEMS_VELOCITY
+    mesh.position.y = getYFromZ(mesh.position.z, y)
 
     if (outTest(mesh.position)) {
       base3d.scene.remove(mesh)
@@ -28,7 +34,10 @@ export function createObstacle () {
     if (hitTest(mesh.position, player.mesh.position)) {
       base3d.scene.remove(mesh)
       obstacleManager.list.splice(obstacleManager.list.indexOf(obstacle), 1)
-      score.lifes--
+      
+      if (!DEBUG) {
+        score.lifes--
+      }
     }
   }
 

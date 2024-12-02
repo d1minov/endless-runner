@@ -33,9 +33,7 @@ function createObstacleManager () {
     }
 
     for(const x of positions) {
-      const z = -(config.INIT_ITEMS_DISTANCE + gap)
-      const { mesh } = createObstacle()
-      mesh.position.set(x, 0, z)
+      createObstacle({ x, y: 0, z: -(config.INIT_ITEMS_DISTANCE + gap)})
     }
   }
 

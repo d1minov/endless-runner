@@ -20,12 +20,11 @@ function createBonusManager () {
   }
 
   function spawnNew(gap: number) {
-    const { mesh } = createBonus()
-    mesh.position.set(
-      config.LINE_POSITIONS[Math.floor(Math.random() * config.LINE_COUNT)],
-      Math.random() < 0.25 ? 1 : 0,
-      -(Math.round(config.INIT_ITEMS_DISTANCE * 0.5) + gap)
-    )
+    createBonus({
+      x: config.LINE_POSITIONS[Math.floor(Math.random() * config.LINE_COUNT)],
+      y: Math.random() < 0.25 ? 1 : 0,
+      z: -(Math.round(config.INIT_ITEMS_DISTANCE * 1.5) + gap)
+    })
   }
 
   return {

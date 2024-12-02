@@ -7,17 +7,20 @@ import { hitTest } from '../physic/hitTest';
 import { player } from './player';
 import { bonusManager } from '../manager/bonusManager';
 import { score } from '../score';
+import { getYFromZ } from '../3d/position';
 
 const geometry = new THREE.SphereGeometry(0.5);
 const material = new THREE.MeshBasicMaterial( { color: 0x00FF00 } );
 
-export function createBonus () {
+export function createBonus ({ x, y, z }: { x: number, y: number, z: number }) {
   const mesh = new THREE.Mesh( geometry, material );
+  mesh.position.set(x, getYFromZ(z, y), z)
 
   base3d.scene.add(mesh)
   
   function tick() {
     mesh.position.z += config.ITEMS_VELOCITY
+    mesh.position.y = getYFromZ(mesh.position.z, y)
 
     if (outTest(mesh.position)) {
       base3d.scene.remove(mesh)
