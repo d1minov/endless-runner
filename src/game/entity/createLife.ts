@@ -10,9 +10,9 @@ import { score } from '../score';
 import { getYFromZ } from '../3d/position';
 
 const geometry = new THREE.SphereGeometry(0.5);
-const material = new THREE.MeshBasicMaterial( { color: 0x00FF00 } );
+const material = new THREE.MeshBasicMaterial( { color: 0x00FFFF } );
 
-export function createBonus ({ x, y, z }: { x: number, y: number, z: number }) {
+export function createLife ({ x, y, z }: { x: number, y: number, z: number }) {
   const mesh = new THREE.Mesh( geometry, material );
   mesh.position.set(x, getYFromZ(z, y), z)
 
@@ -24,22 +24,22 @@ export function createBonus ({ x, y, z }: { x: number, y: number, z: number }) {
 
     if (outTest(mesh.position)) {
       base3d.scene.remove(mesh)
-      itemManager.list.splice(itemManager.list.indexOf(bonus), 1)
+      itemManager.list.splice(itemManager.list.indexOf(life), 1)
     }
 
     if (hitTest(mesh.position, player.mesh.position)) {
       base3d.scene.remove(mesh)
-      itemManager.list.splice(itemManager.list.indexOf(bonus), 1)
-      score.bonus += 10
+      itemManager.list.splice(itemManager.list.indexOf(life), 1)
+      score.lifes += 1
     }
   }
 
-  const bonus = {
+  const life = {
     tick,
     mesh
   }
 
-  itemManager.list.push(bonus)
+  itemManager.list.push(life)
 
-  return bonus
+  return life
 }

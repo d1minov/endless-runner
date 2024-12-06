@@ -11,7 +11,11 @@ function createConfig () {
 
     PLAYER_VELOCITY_X: 0.25,
     PLAYER_VELOCITY_Y: 0.1,
-    PLAYER_JUMP_DIST: [5, 4, 3][level]
+    PLAYER_JUMP_DIST: [5, 4, 3][level],
+
+    LIFE_COUNT: [3, 2, 1][level],
+    LIFE_EVERY: [15, 20, 30][level],
+    LIFE_MAX: 7,
   }
 
   const options = {

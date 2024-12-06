@@ -21,7 +21,7 @@ function createScore () {
     },
     set lifes (value: number) {
       lifes = value
-      if (lifes >= 0) {
+      if (lifes > 0) {
         lifeEl.innerHTML = new Array(value).fill('💜').join('')
       } else {
         lifeEl.innerHTML = '☠️'
