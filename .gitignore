@@ -1,3 +1,7 @@
+# Crea
+crea/*.blend*
+!crea/*.blend
+
 # Logs
 logs
 *.log

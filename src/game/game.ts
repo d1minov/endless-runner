@@ -7,7 +7,7 @@ import { mountainManager } from "./manager/mountainManager";
 import { obstacleManager } from "./manager/obstacleManager";
 import { score } from "./score";
 
-function Game () {
+async function Game () {
 
   base3d.renderer.setAnimationLoop( mainLoop );
 

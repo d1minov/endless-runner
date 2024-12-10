@@ -1,12 +1,14 @@
-import { CylinderGeometry, InstancedMesh, Material, Matrix4, MeshBasicMaterial, MeshNormalMaterial, Vector3 } from "three";
+import { BufferGeometry, InstancedMesh, Material, Matrix4, MeshBasicMaterial, MeshNormalMaterial, Vector3 } from "three";
 import { config } from "../config"
 import { getYFromZ } from "../3d/position";
 import { base3d } from "../3d/base3d";
+import { assets } from "../assets";
 
-function createCylindersManager ({ xInit, material, width }: { xInit: number, material: Material, width: number }) {
+function createCylindersManager ({ xInit, geometry, material }: { xInit: number, material: Material, geometry: BufferGeometry }) {
   const count = config.INIT_ITEMS_DISTANCE
   const road = new InstancedMesh(
-    new CylinderGeometry(0.5, 0.5, width),
+    geometry,
+    // new CylinderGeometry(0.5, 0.5, width),
     material,
     count
   );
@@ -19,7 +21,7 @@ function createCylindersManager ({ xInit, material, width }: { xInit: number, ma
 
     const matrix = new Matrix4();
     const vector3 = new Vector3(xInit, getYFromZ(currentZ, y), currentZ)
-    matrix.makeRotationZ(Math.PI / 2)
+    // matrix.makeRotationX(-Math.PI / 2)
     matrix.setPosition(vector3)
     road.setMatrixAt( i, matrix );
   }
@@ -51,21 +53,21 @@ function createCylindersManager ({ xInit, material, width }: { xInit: number, ma
 function createGroundManager () {
   const road = createCylindersManager({
     xInit: 0,
-    material: new MeshNormalMaterial(),
-    width: config.LINE_COUNT
+    material: config.LINE_COUNT === 3 ? assets.road3.material : assets.road5.material,
+    geometry: config.LINE_COUNT === 3 ? assets.road3.geometry : assets.road5.geometry
   })
 
   const borderWidth = 10
-  const material = new MeshBasicMaterial({ color: 0x331111 })
+  const material = assets.grass.material
   const left = createCylindersManager({
     xInit: -(config.LINE_COUNT + borderWidth) / 2,
     material,
-    width: borderWidth
+    geometry: assets.grass.geometry
   })
   const right = createCylindersManager({
     xInit: (config.LINE_COUNT + borderWidth) / 2,
     material,
-    width: borderWidth
+    geometry: assets.grass.geometry
   })
 
   function tick() {

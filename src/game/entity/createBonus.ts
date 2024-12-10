@@ -8,13 +8,12 @@ import { player } from './player';
 import { itemManager } from '../manager/itemManager';
 import { score } from '../score';
 import { getYFromZ } from '../3d/position';
-
-const geometry = new THREE.SphereGeometry(0.5);
-const material = new THREE.MeshBasicMaterial( { color: 0x00FF00 } );
+import { assets } from '../assets';
 
 export function createBonus ({ x, y, z }: { x: number, y: number, z: number }) {
-  const mesh = new THREE.Mesh( geometry, material );
+  const mesh = new THREE.Mesh( assets.bonus.geometry, assets.bonus.material );
   mesh.position.set(x, getYFromZ(z, y), z)
+  mesh.scale.multiplyScalar(0.5)
 
   base3d.scene.add(mesh)
   

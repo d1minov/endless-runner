@@ -8,15 +8,13 @@ import { player } from './player';
 import { hitTest } from '../physic/hitTest';
 import { score } from '../score';
 import { getYFromZ } from '../3d/position';
+import { assets } from '../assets';
 
 const DEBUG = false
 
-const geometry = new THREE.BoxGeometry(1);
-const material = new THREE.MeshNormalMaterial();
-
 export function createObstacle ({ x, y, z }: { x: number, y: number, z: number }) {
 
-  const mesh = new THREE.Mesh( geometry, material );
+  const mesh = new THREE.Mesh( assets.rock.geometry, assets.rock.material );
   mesh.position.set(x, getYFromZ(z, y), z)
   
   base3d.scene.add(mesh)

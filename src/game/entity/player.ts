@@ -4,17 +4,16 @@ import { Controls } from '../controls/index';
 import { base3d } from '../3d/base3d';
 import { config } from '../config';
 import { getYFromZ } from '../3d/position';
+import { assets } from '../assets';
 
 function createPlayer () {
 
   const geometry = new THREE.SphereGeometry(0.5);
   const material = new THREE.MeshBasicMaterial( { color: 0x0000FF } );
-  const mesh = new THREE.Mesh( geometry, material );
+  const mesh = new THREE.Mesh( assets.chicken.geometry, assets.chicken.material );
 
   let y = 0
-
-  mesh.position.x = 0
-  mesh.position.y = getYFromZ(0, y)
+  mesh.position.set(0, getYFromZ(0, y), 0)
 
   let xTarget = 0
   let yTarget = 0

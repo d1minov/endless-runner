@@ -10,6 +10,9 @@ function createBase3D () {
   camera.lookAt(scene.position)
   camera.position.y = 4;
 
+  const light = new THREE.AmbientLight(0xFFFFFF, 1)
+  scene.add(light)
+
   const renderer = new THREE.WebGLRenderer({
     canvas: document.body.querySelector('canvas')!
   });
