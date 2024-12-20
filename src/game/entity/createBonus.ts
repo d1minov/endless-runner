@@ -14,6 +14,7 @@ export function createBonus ({ x, y, z }: { x: number, y: number, z: number }) {
   const mesh = new THREE.Mesh( assets.bonus.geometry, assets.bonus.material );
   mesh.position.set(x, getYFromZ(z, y), z)
   mesh.scale.multiplyScalar(0.5)
+  mesh.castShadow = true
 
   base3d.scene.add(mesh)
   

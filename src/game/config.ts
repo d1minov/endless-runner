@@ -4,6 +4,8 @@ function createConfig () {
   const level = Number(urlParams.get('level'));
 
   const initial = {
+    DEBUG: true,
+
     ITEMS_VELOCITY: [0.1, 0.2, 0.3][level],
     INIT_ITEMS_DISTANCE: 50,
 

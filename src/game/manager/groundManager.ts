@@ -12,6 +12,8 @@ function createCylindersManager ({ xInit, geometry, material }: { xInit: number,
     material,
     count
   );
+  road.castShadow = true
+  road.receiveShadow = true
   let z = 0
 
   for (let i = 0; i < count; i++) {

@@ -1,5 +1,5 @@
 
-import { BufferGeometry, Material, Mesh, NormalBufferAttributes, Object3DEventMap } from 'three';
+import { BufferGeometry, Color, Material, Mesh, MeshPhysicalMaterial, NormalBufferAttributes, Object3DEventMap } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 type GMesh = Mesh<BufferGeometry<NormalBufferAttributes>, Material, Object3DEventMap>
@@ -21,6 +21,7 @@ async function createAssets() {
   }>((resolve) => {
     loader.load( 'assets.gltf', async function ( gltf ) {
       console.log(gltf.scene)
+
       resolve({
         chicken: gltf.scene.children.find(mesh => mesh.name === 'Chicken') as GMesh,
         treeTrunk: gltf.scene.children.find(mesh => mesh.name === 'TreeTrunk') as GMesh,

@@ -15,6 +15,7 @@ const material = new THREE.MeshBasicMaterial( { color: 0x00FFFF } );
 export function createLife ({ x, y, z }: { x: number, y: number, z: number }) {
   const mesh = new THREE.Mesh( geometry, material );
   mesh.position.set(x, getYFromZ(z, y), z)
+  mesh.castShadow = true
 
   base3d.scene.add(mesh)
   

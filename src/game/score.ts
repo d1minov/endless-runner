@@ -1,3 +1,4 @@
+import { config } from "./config"
 import { player } from "./entity/player"
 
 function createScore () {
@@ -25,8 +26,11 @@ function createScore () {
         lifeEl.innerHTML = new Array(value).fill('💜').join('')
       } else {
         lifeEl.innerHTML = '☠️'
-        player.dies()
-        setTimeout(() => window.location.href = `score.html?score=${bonus}`, 1000)
+
+        if (!config.DEBUG) {
+          player.dies()
+          setTimeout(() => window.location.href = `score.html?score=${bonus}`, 1000)
+        }
       }
     },
   }
