@@ -7,7 +7,10 @@ type GMesh = Mesh<BufferGeometry<NormalBufferAttributes>, Material, Object3DEven
 async function createAssets() {
   const loader = new GLTFLoader().setPath( '/assets/' );
   return new Promise<{
-    chicken: GMesh,
+    chickenBeak: GMesh,
+    chickenBody: GMesh,
+    chickenCrest: GMesh,
+    chickenLegs: GMesh,
     treeTrunk: GMesh,
     treeFoliage: GMesh,
     bonus: GMesh,
@@ -23,15 +26,18 @@ async function createAssets() {
       console.log(gltf.scene)
 
       resolve({
-        chicken: gltf.scene.children.find(mesh => mesh.name === 'Chicken') as GMesh,
-        treeTrunk: gltf.scene.children.find(mesh => mesh.name === 'TreeTrunk') as GMesh,
-        treeFoliage: gltf.scene.children.find(mesh => mesh.name === 'TreeFoliage') as GMesh,
+        chickenBeak: gltf.scene.children.find(mesh => mesh.name === 'ChickenBeak') as GMesh,
+        chickenBody: gltf.scene.children.find(mesh => mesh.name === 'ChickenBody') as GMesh,
+        chickenCrest: gltf.scene.children.find(mesh => mesh.name === 'ChickenCrest') as GMesh,
+        chickenLegs: gltf.scene.children.find(mesh => mesh.name === 'ChickenLegs') as GMesh,
+        treeTrunk: gltf.scene.children.find(mesh => mesh.name === 'TreeTrunk2') as GMesh,
+        treeFoliage: gltf.scene.children.find(mesh => mesh.name === 'TreeFoliage2') as GMesh,
         bonus: gltf.scene.children.find(mesh => mesh.name === 'Bonus') as GMesh,
         bush: gltf.scene.children.find(mesh => mesh.name === 'Bush') as GMesh,
         life: gltf.scene.children.find(mesh => mesh.name === 'Life') as GMesh,
         road3: gltf.scene.children.find(mesh => mesh.name === 'Road3') as GMesh,
         road5: gltf.scene.children.find(mesh => mesh.name === 'Road5') as GMesh,
-        grass: gltf.scene.children.find(mesh => mesh.name === 'Grass') as GMesh,
+        grass: gltf.scene.children.find(mesh => mesh.name === 'Grass2') as GMesh,
         rock: gltf.scene.children.find(mesh => mesh.name === 'Rock') as GMesh,
         background: gltf.scene.children.find(mesh => mesh.name === 'Background') as GMesh,
       })

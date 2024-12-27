@@ -7,10 +7,13 @@ import { getYFromZ } from '../3d/position';
 import { assets } from '../assets';
 
 function createPlayer () {
-
-  const geometry = new THREE.SphereGeometry(0.5);
-  const material = new THREE.MeshBasicMaterial( { color: 0x0000FF } );
-  const mesh = new THREE.Mesh( assets.chicken.geometry, assets.chicken.material );
+  
+  const mesh = new THREE.Group()
+  mesh.add(new THREE.Mesh( assets.chickenBeak.geometry, assets.chickenBeak.material ))
+  mesh.add(new THREE.Mesh( assets.chickenBody.geometry, assets.chickenBody.material ))
+  mesh.add(new THREE.Mesh( assets.chickenCrest.geometry, assets.chickenCrest.material ))
+  mesh.add(new THREE.Mesh( assets.chickenLegs.geometry, assets.chickenLegs.material ))
+  
 
   let y = 0
   mesh.position.set(0, getYFromZ(0, y), 0)
