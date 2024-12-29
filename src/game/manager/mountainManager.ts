@@ -1,4 +1,4 @@
-import { CylinderGeometry, InstancedMesh, Matrix4, MeshNormalMaterial, Vector3 } from "three";
+import { InstancedMesh, Matrix4, Vector3 } from "three";
 import { config } from "../config"
 import { getYFromZ } from "../3d/position";
 import { base3d } from "../3d/base3d";
@@ -8,21 +8,17 @@ import { assets } from "../assets";
 function createMountainManager () {
   const FOLIAGE_HEIGHT = 2.2
   const y = -0.5
-  const count = 350
+  const count = 72
   const trunks = new InstancedMesh(
     assets.treeTrunk.geometry,
     assets.treeTrunk.material,
     count
   );
-  trunks.castShadow = true
-  trunks.receiveShadow = true
   const foliages = new InstancedMesh(
     assets.treeFoliage.geometry,
     assets.treeFoliage.material,
     count
   );
-  foliages.castShadow = true
-  foliages.receiveShadow = true
 
   for (let i = 0; i < count; i++) {
     const isLeft = (i % 2) === 0

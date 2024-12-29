@@ -14,8 +14,8 @@ function createBase3D () {
   camera.position.y = 4;
 
   const background = assets.background
-  background.position.set(0, 20, -config.INIT_ITEMS_DISTANCE)
-  background.scale.multiplyScalar(8)
+  background.position.set(0, 8, -config.INIT_ITEMS_DISTANCE)
+  background.scale.multiplyScalar(4)
   background.lookAt(0, -100, background.position.z + 40)
   // background.rotateX(Math.PI / 2)
   scene.add(background)
@@ -24,26 +24,16 @@ function createBase3D () {
   scene.add(light)
   
   const sun = new THREE.DirectionalLight(0xFFFFFF, 2)
-  sun.castShadow = true
   sun.position.set(0, 4, 0)
-  // sun.lookAt(new THREE.Vector3(0, 0, -4))
   sun.rotateX(Math.PI / 2)
-  // sun.lookAt(new THREE.Vector3(sun.position.x, 0, 2 * sun.position.z))
-  sun.shadow.camera.near = 0.25
-  sun.shadow.camera.far = 9
-  sun.shadow.camera.top = config.INIT_ITEMS_DISTANCE - 1
-  sun.shadow.camera.bottom = -3
-  sun.shadow.camera.left = -10
-  sun.shadow.camera.right = 10
-
-
+  
   scene.add(sun)
 
   if (config.DEBUG) {
     const helper = new THREE.DirectionalLightHelper(sun)
     scene.add(helper)
-    const shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
-    scene.add(shadowHelper);
+    // const shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
+    // scene.add(shadowHelper);
   }
 
   const renderer = new THREE.WebGLRenderer({

@@ -10,14 +10,12 @@ import { score } from '../score';
 import { getYFromZ } from '../3d/position';
 import { assets } from '../assets';
 
-const DEBUG = false
+const DEBUG = true
 
 export function createObstacle ({ x, y, z }: { x: number, y: number, z: number }) {
 
   const mesh = new THREE.Mesh( assets.rock.geometry, assets.rock.material );
   mesh.position.set(x, getYFromZ(z, y), z)
-  mesh.castShadow = true
-  mesh.receiveShadow = true
 
   base3d.scene.add(mesh)
 

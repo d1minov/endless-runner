@@ -1,29 +1,29 @@
-import { BufferGeometry, InstancedMesh, Material, Matrix4, MeshBasicMaterial, MeshNormalMaterial, Vector3 } from "three";
+import { BufferGeometry, InstancedMesh, Material, Matrix4, Vector3 } from "three";
 import { config } from "../config"
 import { getYFromZ } from "../3d/position";
 import { base3d } from "../3d/base3d";
 import { assets } from "../assets";
 
-function createCylindersManager ({ xInit, geometry, material }: { xInit: number, material: Material, geometry: BufferGeometry }) {
+function createCylindersManager ({ xInit, geometry, material, random }: { xInit: number, material: Material, geometry: BufferGeometry, random: boolean }) {
   const count = config.INIT_ITEMS_DISTANCE
   const road = new InstancedMesh(
     geometry,
-    // new CylinderGeometry(0.5, 0.5, width),
     material,
     count
   );
-  road.castShadow = true
-  road.receiveShadow = true
   let z = 0
 
   for (let i = 0; i < count; i++) {
-
     const y = -1
     const currentZ = z + 1 - i
 
     const matrix = new Matrix4();
     const vector3 = new Vector3(xInit, getYFromZ(currentZ, y), currentZ)
-    // matrix.makeRotationX(-Math.PI / 2)
+    if (random) {
+      matrix.makeScale(Math.random() > 0.5 ? -1 : 1, 1, Math.random() > 0.5 ? -1 : 1)
+    } else {
+      matrix.makeScale(1 , 1, 1.1)
+    }
     matrix.setPosition(vector3)
     road.setMatrixAt( i, matrix );
   }
@@ -33,10 +33,12 @@ function createCylindersManager ({ xInit, geometry, material }: { xInit: number,
   const matrix = new Matrix4();
   const vector3 = new Vector3()
   function tick() {
-    z = (z + config.ITEMS_VELOCITY) % 1
+    
+    z = (z + config.ITEMS_VELOCITY)
+
     for (let i = 0; i < count; i++) {
       const y = -1
-      const currentZ = z + 1 - i
+      const currentZ = (((z + 1 - i) + count - 3) % count) - (count - 3)
   
       road.getMatrixAt(i, matrix)
       vector3.set(xInit, getYFromZ(currentZ, y), currentZ)
@@ -56,26 +58,42 @@ function createGroundManager () {
   const road = createCylindersManager({
     xInit: 0,
     material: config.LINE_COUNT === 3 ? assets.road3.material : assets.road5.material,
-    geometry: config.LINE_COUNT === 3 ? assets.road3.geometry : assets.road5.geometry
+    geometry: config.LINE_COUNT === 3 ? assets.road3.geometry : assets.road5.geometry,
+    random: false
   })
 
   const borderWidth = 10
-  const material = assets.grass.material
-  const left = createCylindersManager({
+  const leftGround = createCylindersManager({
     xInit: -(config.LINE_COUNT + borderWidth) / 2,
-    material,
-    geometry: assets.grass.geometry
+    material: assets.grassGround.material,
+    geometry: assets.grassGround.geometry,
+    random: false
   })
-  const right = createCylindersManager({
+  const rightGround = createCylindersManager({
     xInit: (config.LINE_COUNT + borderWidth) / 2,
-    material,
-    geometry: assets.grass.geometry
+    material: assets.grassGround.material,
+    geometry: assets.grassGround.geometry,
+    random: false
+  })
+  const leftGrass = createCylindersManager({
+    xInit: -(config.LINE_COUNT + borderWidth) / 2,
+    material: assets.grass.material,
+    geometry: assets.grass.geometry,
+    random: true
+  })
+  const rightGrass = createCylindersManager({
+    xInit: (config.LINE_COUNT + borderWidth) / 2,
+    material: assets.grass.material,
+    geometry: assets.grass.geometry,
+    random: true
   })
 
   function tick() {
     road.tick()
-    left.tick()
-    right.tick()
+    leftGround.tick()
+    leftGrass.tick()
+    rightGround.tick()
+    rightGrass.tick()
   }
 
   return {
